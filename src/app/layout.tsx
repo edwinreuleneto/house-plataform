@@ -1,0 +1,64 @@
+import type { Metadata } from "next"
+import { Poppins } from 'next/font/google'
+
+// Styles
+import "@/styles/globals.css"
+
+// Configurando Inter
+const inter = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
+})
+
+export const metadata: Metadata = {
+  title: "Donna. Presente, precisa e inteligente",
+  description: "Donna é sua assistente virtual de alta performance, preparada para atuar com precisão em ambientes corporativos.",
+  keywords: ["assistente virtual", "inteligência artificial", "executiva", "donna", "automação", "secretária digital"],
+  authors: [{ name: "Equipe Donna" }],
+  creator: "Donna AI",
+  themeColor: "#ffffff",
+  metadataBase: new URL("https://donna.ai"),
+
+  openGraph: {
+    title: "Donna. Presente, precisa e inteligente",
+    description: "Descubra a Donna, a assistente inteligente para empresas de alta performance.",
+    url: "https://donna.ai",
+    siteName: "Donna AI",
+    images: [
+      {
+        url: "https://donna.ai/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Donna, a assistente virtual corporativa",
+      },
+    ],
+    locale: "pt_BR",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Donna. Presente, precisa e inteligente",
+    description: "Donna é sua assistente virtual corporativa de alta performance.",
+    images: ["https://donna.ai/og-image.jpg"],
+    creator: "@donna_ai",
+  },
+}
+
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html lang="pt-br">
+      <body
+        className={`${inter.variable} antialiased bg-gradient h-full bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950`}
+      >
+        {children}
+      </body>
+    </html>
+  )
+}

@@ -1,0 +1,33 @@
+import { Control, FieldError, FieldValues, Path } from "react-hook-form";
+
+export type InputProps<T extends FieldValues = FieldValues> = {
+  label?: string;
+  control: Control<T>;
+  formatChars?: Record<string, string>;
+  name: Path<T>;
+  showCount?: boolean;
+  allowClear?: boolean;
+  icon?: React.ReactNode;
+  placeholder?: string;
+  type?: string;
+  custonStyle?: React.CSSProperties;
+  error?: FieldError;
+  inputMode?: "search" | "text" | "email" | "tel" | "url" | "none" | "numeric" | "decimal";
+  inputType?: "mask" | "default" | "money" | "datetime";
+  prefix?: React.ReactNode;
+  min?: string | number;
+  mask?: string;
+  prefixmask?: string;
+  defaultValue?: string | number;
+  disabled?: boolean;
+  loading?: boolean;
+  required?: boolean;
+  tabindex?: number;
+  autoFocus?: boolean;
+  handleBlur?: (value: string) => void;
+  handleFocus?: (value: string) => void;
+  handleOnChange?: (value: string | number) => void;
+  className?: string;
+  rules?: Record<string, unknown>;
+  currencyCode?: string;
+};
