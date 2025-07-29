@@ -1,0 +1,67 @@
+export interface LeadAddress {
+  placeId: string
+  zipCode: string
+  addressLine1: string
+  addressLine2: string
+  country: string
+  shortCountry: string
+  state: string
+  shortState: string
+  city: string
+  shortCity: string
+  formatedAddress: string
+  latitude: number
+  longitude: number
+}
+
+export interface LeadProperty {
+  image?: string
+  origin?: string
+  description?: string
+  livingAreaValue?: number
+  propertyType?: string
+}
+
+export interface LeadItem {
+  id: number
+  idItem: number
+  label: string
+  title: string
+  value: string
+  multiple: number
+  valueAdicional: number
+  summaryLabel: string
+}
+
+export interface Lead {
+  _id: string
+  orderID: string
+  status: string
+  total: number
+  discount?: number
+  invoiceStatus?: string
+  address: LeadAddress
+  statusApprovedInvoice?: boolean
+  acceptSMS?: boolean
+  photos?: string[]
+  statusPayment?: string
+  suggestionSchedule?: unknown[]
+  property: LeadProperty[]
+  items: LeadItem[]
+  isHomeOwner?: boolean
+  productType?: string
+  roof?: string
+  roofColor?: string
+  step?: string
+}
+
+export interface GetLeadsFilters {
+  page?: number
+  limit?: number
+}
+
+export interface GetLeadsResponse {
+  data: Lead[]
+  page: number
+  totalPages: number
+}
