@@ -2,7 +2,7 @@
 import { api } from '../api'
 
 // Types
-import type { GetSalesFilters, GetSalesResponse, Sale } from './sales.props'
+import type { GetSalesFilters, GetSalesResponse, Sale, SaleDTO } from './sales.props'
 
 // Services
 const GetSales = (filters?: GetSalesFilters): Promise<GetSalesResponse> => {
@@ -23,4 +23,7 @@ const GetSales = (filters?: GetSalesFilters): Promise<GetSalesResponse> => {
 const GetSale = (id: string): Promise<Sale> =>
   api(`/sales/${id}`, { method: 'GET' })
 
-export { GetSales, GetSale }
+const CreateSale = (data: SaleDTO): Promise<Sale> =>
+  api('/sales', { method: 'POST', body: data })
+
+export { GetSales, GetSale, CreateSale }

@@ -12,9 +12,6 @@ const SalesTableSkeleton = () => (
         <tr>
           <th className="px-6 py-4 text-left">Address</th>
           <th className="px-6 py-4 text-left">Responsible</th>
-          <th className="px-6 py-4 text-left">Phone</th>
-          <th className="px-6 py-4 text-left">Lat</th>
-          <th className="px-6 py-4 text-left">Long</th>
           <th className="px-6 py-4 text-right w-20">
             <span className="sr-only">Actions</span>
           </th>
@@ -25,9 +22,6 @@ const SalesTableSkeleton = () => (
           <tr key={index} className="hover:bg-gray-50 transition">
             <td className="px-6 py-4"><Skeleton className="h-4 w-40" /></td>
             <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
-            <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
-            <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
-            <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
             <td className="px-6 py-4 text-right flex justify-end gap-2">
               <Skeleton className="h-5 w-5" />
               <Skeleton className="h-5 w-5" />

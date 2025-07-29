@@ -7,6 +7,14 @@ export interface Sale {
   phone?: string
 }
 
+export interface SaleDTO {
+  address: string
+  lat?: number
+  long?: number
+  responsibleName: string
+  phone?: string
+}
+
 export interface GetSalesFilters {
   address?: string
   lat?: number
