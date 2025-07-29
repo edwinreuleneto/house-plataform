@@ -53,7 +53,7 @@ export const GraphUsersQuestion = () => {
     stroke: {
       curve: 'smooth',
       width: 2,
-      colors: ['#e093c4']
+      colors: ['#000000']
     },
     grid: {
       show: false
@@ -92,7 +92,7 @@ export const GraphUsersQuestion = () => {
         shade: 'light',
         type: "vertical",
         shadeIntensity: 0.4,
-        gradientToColors: ['#daa7c7'],
+        gradientToColors: ['#000000'],
         opacityFrom: 0.4,
         opacityTo: 0.1,
         stops: [0, 100],
@@ -100,12 +100,12 @@ export const GraphUsersQuestion = () => {
     },
     markers: {
       size: 3,
-      colors: ['#c3579b'],
+      colors: ['#000000'],
       strokeColors: '#fff',
       strokeWidth: 1,
       hover: { size: 6 }
     },
-    colors: ['#f046b2'],
+    colors: ['#000000'],
   }
 
   return (
@@ -113,9 +113,6 @@ export const GraphUsersQuestion = () => {
       <div className='relative before:w-full '>
         <div className='relative z-1 min-h-[400px]'>
           <ReactApexChart options={options} series={series} type="area" height={400} />
-        </div>
-        <div className='absolute right-12 bottom-6 z-3'>
-          <ListUserActive />
         </div>
       </div>
     </div>

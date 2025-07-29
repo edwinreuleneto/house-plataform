@@ -81,7 +81,7 @@ const LoginForm = () => {
                 label="E-mail"
                 name="email"
                 control={control}
-                placeholder="email@donna.com"
+                placeholder="email@houser.com"
                 type="email"
                 inputType="default"
                 error={errors.email}
@@ -119,7 +119,7 @@ const LoginForm = () => {
               />
             </div>
 
-            <div className='grid justify-center py-0 before:w-full before:h-[1px] before:bg-gray-200 relative before:absolute before:top-[20px] before:z-1'>
+            {/* <div className='grid justify-center py-0 before:w-full before:h-[1px] before:bg-gray-200 relative before:absolute before:top-[20px] before:z-1'>
               <span className='bg-white p-2 px-6 mx-auto text-sm text-gray-600 z-2'> ou </span>
             </div>
 
@@ -134,7 +134,7 @@ const LoginForm = () => {
                 onClick={() => mutationMicrosoft.mutate()}
                 icon={<Image src="/images/icons/microsoft-svgrepo-com.svg" alt="Microsoft" width={20} height={20} />}
               />
-            </div>
+            </div> */}
           </form>
         </div>
       </>

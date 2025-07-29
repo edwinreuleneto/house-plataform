@@ -2,34 +2,35 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 
 const stats = [
   {
-    name: 'Novos usuários',
-    stat: '1.284',
-    previousStat: '1.102',
-    change: '16.5%',
+    name: 'Orçamentos solicitados',
+    stat: '432',
+    previousStat: '389',
+    change: '11.1%',
     changeType: 'increase',
   },
   {
-    name: 'Questionamentos',
-    stat: '6.734',
-    previousStat: '6.915',
-    change: '2.6%',
+    name: 'Orçamentos aprovados',
+    stat: '289',
+    previousStat: '301',
+    change: '4.0%',
     changeType: 'decrease',
   },
   {
-    name: 'Documentos processados',
-    stat: '3.981',
-    previousStat: '3.127',
-    change: '27.3%',
+    name: 'Valor total aprovado',
+    stat: 'R$ 128.450',
+    previousStat: 'R$ 112.300',
+    change: '14.4%',
     changeType: 'increase',
   },
   {
-    name: 'Emails lidos',
-    stat: '2.142',
-    previousStat: '1.993',
-    change: '7.5%',
-    changeType: 'increase',
+    name: 'Tempo médio de resposta',
+    stat: '1h 27min',
+    previousStat: '1h 35min',
+    change: '8.4%',
+    changeType: 'decrease',
   },
 ]
+
 
 const Stats = () =>  {
   return (

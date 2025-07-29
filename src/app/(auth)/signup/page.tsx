@@ -8,7 +8,8 @@ import SignUpForm from './_components/Form'
 
 export default function SignUpPage() {
   const bannerImages = [
-    '/images/login/banner-1.jpeg'
+    '/images/login/banner-1.jpeg',
+    '/images/login/banner-2.jpeg'
   ]
 
   const [randomBanner, setRandomBanner] = useState<string | null>(null)
@@ -28,7 +29,7 @@ export default function SignUpPage() {
               Voltar
             </Link>
           </div>
-          <Image src="/images/donna/donna.png" width={140} height={140} alt="Donna. Presente, precisa e inteligente." />
+          <Image src="/images/houser/houser.png" width={140} height={140} alt="Donna. Presente, precisa e inteligente." />
           <div className="mt-10">
             <SignUpForm />
           </div>

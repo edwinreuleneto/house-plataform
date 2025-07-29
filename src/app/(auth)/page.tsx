@@ -6,7 +6,8 @@ import LoginForm from './_components/Form'
 
 export default function LoginPage() {
   const bannerImages = [
-    '/images/login/banner-1.jpeg'
+    '/images/login/banner-1.jpeg',
+    '/images/login/banner-2.jpeg'
   ]
 
   const [randomBanner, setRandomBanner] = useState<string | null>(null)
@@ -20,7 +21,7 @@ export default function LoginPage() {
     <section className="grid min-h-screen grid-cols-[1fr] lg:grid-cols-[580px_1fr] xl:[680px_1fr] p-8 relative max-w-[1980px] mx-auto">
       <div className="flex flex-1 flex-col justify-center px-4 py-8 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96">
-          <Image src="/images/donna/donna.png" width={130} height={140} alt="Donna. Presente, precisa e inteligente." />
+          <Image src="/images/houser/houser.png" width={160} height={140} alt="Donna. Presente, precisa e inteligente." />
 
           <div className="mt-12">
             <Suspense fallback={null}>

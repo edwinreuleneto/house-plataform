@@ -29,14 +29,14 @@ const SignUpForm = () => {
     formState: { errors },
   } = useForm<SignUpFormProps>({
     resolver: zodResolver(SignUpSchema),
-    defaultValues: { name: '', email: '', phone: '', password: '' },
+    defaultValues: { name: '', email: '',  password: '' },
   })
 
   const { login } = useAuth()
   const { showNotification } = useNotification()
 
   const mutation = useMutation((data: SignUpFormProps) =>
-    SignUpUser({ ...data, threadId: '', provider: 'local' }), {
+    SignUpUser({ ...data }), {
     onSuccess: (data) => {
       login(data)
     },
@@ -94,7 +94,7 @@ const SignUpForm = () => {
         variant={'primary'}
       />
 
-      <div className='grid justify-center py-0 before:w-full before:h-[1px] before:bg-gray-200 relative before:absolute before:top-[20px] before:z-1'>
+      {/* <div className='grid justify-center py-0 before:w-full before:h-[1px] before:bg-gray-200 relative before:absolute before:top-[20px] before:z-1'>
         <span className='bg-white p-2 px-6 mx-auto text-sm text-gray-600 z-2'> ou </span>
       </div>
 
@@ -107,7 +107,7 @@ const SignUpForm = () => {
         variant={'link'}
         onClick={() => mutationMicrosoft.mutate()}
         icon={<Image src="/images/icons/microsoft-svgrepo-com.svg" alt="Microsoft" width={20} height={20} />}
-      />
+      /> */}
     </form>
   )
 }

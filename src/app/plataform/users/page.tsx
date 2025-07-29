@@ -2,7 +2,7 @@
 
 // Dependencies
 import { useState } from 'react'
-import { SunIcon } from 'lucide-react'
+import { Plug2Icon, SunIcon } from 'lucide-react'
 import { useMutation, useQuery } from 'react-query'
 
 // Components
@@ -44,10 +44,10 @@ const PageUsers = () => {
           </p>
         </div>
         <Button
-          label="Sincronizar lista"
+          label="New user"
           variant="primary"
           size="medium"
-          icon={<SunIcon className={`w-4 mr-1 ${syncMutation.isLoading ? 'animate-spin' : ''}`} />}
+          icon={<Plug2Icon className={`w-4 mr-0.5 ${syncMutation.isLoading ? 'animate-spin' : ''}`} />}
           onClick={() => syncMutation.mutate()}
         />
       </div>

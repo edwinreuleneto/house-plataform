@@ -40,7 +40,7 @@ const ForgotPasswordForm = () => {
         label="E-mail"
         name="email"
         control={control}
-        placeholder="email@donna.com"
+        placeholder="email@houser.com"
         type="email"
         inputType="default"
         error={errors.email}

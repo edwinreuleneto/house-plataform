@@ -22,9 +22,7 @@ const UserTable = ({ users }: UserTableProps) => {
         <thead className="bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wide">
           <tr>
             <th scope="col" className="px-6 py-4 text-left">Nome</th>
-            <th className="px-6 py-4 text-left">Cargo e departamento</th>
-            <th className="px-6 py-4 text-center">Grupos</th>
-            <th className="px-6 py-4 text-center">Donna</th>
+            <th className="px-6 py-4 text-center">Status</th>
             <th className="px-6 py-4 text-right w-14"><span className="sr-only">Ações</span></th>
           </tr>
         </thead>
@@ -40,23 +38,12 @@ const UserTable = ({ users }: UserTableProps) => {
                       className="w-10 h-10 rounded-full bg-gray-100"
                       alt={user.name}
                     />
-                    <span className={`w-4 h-4 absolute bg-white rounded-full -bottom-0.5 right-0 before:w-[60%] before:h-[60%] ${!!user.externalActive ? 'before:bg-green-500' : 'before:bg-gray-300'} before:absolute before:left-[20%] before:top-[20%] before:rounded-full`} />
+                    <span className={`w-4 h-4 absolute bg-white rounded-full -bottom-0.5 right-0 before:w-[60%] before:h-[60%] ${!!user.active ? 'before:bg-green-500' : 'before:bg-gray-300'} before:absolute before:left-[20%] before:top-[20%] before:rounded-full`} />
                   </div>
                   <div className='grid'>
                     <p className="font-medium text-slate-800 truncate"> {user.name} </p>
                     <small className='font-medium text-slate-600 truncate'> {user.email?.toLocaleLowerCase()} </small>
                   </div>
-                </div>
-              </td>
-              <td className="px-6 py-4">
-                <div className='grid'>
-                  <p className="font-medium text-gray-900"> {user.jobTitle} </p>
-                  <small> {user.department} </small>
-                </div>
-              </td>
-              <td className="px-6 py-4 text-center">
-                <div className='grid'>
-                  <p className="font-medium text-gray-900"> - </p>
                 </div>
               </td>
               <td className="px-6 py-4 table-cell items-center text-center">

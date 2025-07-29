@@ -24,10 +24,8 @@ import {
 import {
   LayoutDashboard,
   User2,
-  ChartScatter,
-  ContrastIcon,
-  AirVent,
-  Dock,
+  Sparkles,
+  LucideAxis3D,
 } from "lucide-react"
 
 // Context
@@ -39,11 +37,9 @@ const SidebarContent = () => {
 
   const menuItems = [
     { href: "/plataform", icon: LayoutDashboard, label: "Dashboard", exact: true },
-    { href: "/plataform/users", icon: User2, label: "Usuários e times", exact: true },
-    { href: "/plataform/insights", icon: AirVent, label: "Insights", exact: true },
-    { href: "/plataform/documents", icon: Dock, label: "Documentos", exact: true },
-    { href: "/plataform/history-chats", icon: ChartScatter, label: "Histórico de conversas", exact: true },
-    { href: "/plataform/contracts", icon: ContrastIcon, label: "Contratos", exact: true },
+    { href: "/plataform/leads", icon: LucideAxis3D, label: "Leads", exact: true },
+    { href: "/plataform/sales", icon: Sparkles, label: "Sales", exact: true },
+    { href: "/plataform/users", icon: User2, label: "Users Houser", exact: true },
   ]
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`)
@@ -63,7 +59,7 @@ const SidebarContent = () => {
               <DropdownButton as={SidebarItem} className="w-full py-2">
                 <motion.div className="w-[100%] pt-1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
                   <SidebarLabel>
-                    <Image src="/images/donna/donna.png" width={100} height={120} alt="Donna. Presente, precisa e inteligente." />
+                    <Image src="/images/houser/houser.png" width={100} height={120} alt="Donna. Presente, precisa e inteligente." />
                   </SidebarLabel>
                 </motion.div>
               </DropdownButton>

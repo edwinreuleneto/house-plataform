@@ -15,9 +15,10 @@ const DashboardPage = () => {
 
   const getGreeting = () => {
     const hour = dayjs().hour();
-    if (hour < 12) return "Bom dia";
-    if (hour < 18) return "Boa tarde";
-    return "Boa noite";
+
+    if (hour < 12) return "Good morning";
+    if (hour < 18) return "Good afternoon";
+    return "Good evening";
   };
 
   return (
@@ -29,7 +30,7 @@ const DashboardPage = () => {
               {getGreeting()}, {user?.user.name?.split(" ")[0]} 👋
             </h1>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 -mt-2">
-              Acompanhe os principais indicadores e alertas.
+              Track the main indicators and alerts.
             </p>
           </header>
         </div>
