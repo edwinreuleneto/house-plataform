@@ -12,8 +12,10 @@ const LeadTableSkeleton = () => {
         <thead className="bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wide">
           <tr>
             <th className="px-6 py-4 text-left">Order</th>
+            <th className="px-6 py-4 text-left">Product</th>
             <th className="px-6 py-4 text-left">Address</th>
             <th className="px-6 py-4 text-left">Total</th>
+            <th className="px-6 py-4 text-left">Status</th>
             <th className="px-6 py-4 text-right w-14">
               <span className="sr-only">Actions</span>
             </th>
@@ -23,8 +25,10 @@ const LeadTableSkeleton = () => {
           {Array.from({ length: ROWS }).map((_, index) => (
             <tr key={index} className="hover:bg-gray-50 transition">
               <td className="px-6 py-4"><Skeleton className="h-4 w-20" /></td>
+              <td className="px-6 py-4"><Skeleton className="h-4 w-28" /></td>
               <td className="px-6 py-4"><Skeleton className="h-4 w-56" /></td>
               <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+              <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
               <td className="px-6 py-4 text-right">
                 <Skeleton className="h-5 w-5 ml-auto" />
               </td>

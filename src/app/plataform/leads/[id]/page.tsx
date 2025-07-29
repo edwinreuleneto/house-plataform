@@ -33,12 +33,70 @@ const LeadDetailPage = () => {
       <DescriptionList className="bg-white rounded-md border border-gray-100 p-6">
         <DescriptionTerm>Status</DescriptionTerm>
         <DescriptionDetails>{data.status}</DescriptionDetails>
+        {data.initialValue !== undefined && (
+          <>
+            <DescriptionTerm>Initial Value</DescriptionTerm>
+            <DescriptionDetails>{data.initialValue.toFixed(2)}</DescriptionDetails>
+          </>
+        )}
         <DescriptionTerm>Total</DescriptionTerm>
         <DescriptionDetails>${data.total.toFixed(2)}</DescriptionDetails>
+        {data.discount !== undefined && (
+          <>
+            <DescriptionTerm>Discount</DescriptionTerm>
+            <DescriptionDetails>{data.discount.toFixed(2)}</DescriptionDetails>
+          </>
+        )}
         <DescriptionTerm>Product</DescriptionTerm>
         <DescriptionDetails>{data.productType}</DescriptionDetails>
+        {data.name && (
+          <>
+            <DescriptionTerm>Name</DescriptionTerm>
+            <DescriptionDetails>{data.name}</DescriptionDetails>
+          </>
+        )}
+        {data.email && (
+          <>
+            <DescriptionTerm>Email</DescriptionTerm>
+            <DescriptionDetails>{data.email}</DescriptionDetails>
+          </>
+        )}
+        {data.phone && (
+          <>
+            <DescriptionTerm>Phone</DescriptionTerm>
+            <DescriptionDetails>{data.phone}</DescriptionDetails>
+          </>
+        )}
         <DescriptionTerm>Address</DescriptionTerm>
         <DescriptionDetails>{data.address.formatedAddress}</DescriptionDetails>
+        {data.invoiceStatus && (
+          <>
+            <DescriptionTerm>Invoice Status</DescriptionTerm>
+            <DescriptionDetails>{data.invoiceStatus}</DescriptionDetails>
+          </>
+        )}
+        {data.statusPayment && (
+          <>
+            <DescriptionTerm>Status Payment</DescriptionTerm>
+            <DescriptionDetails>{data.statusPayment}</DescriptionDetails>
+          </>
+        )}
+        {data.invoiceStartDate && (
+          <>
+            <DescriptionTerm>Invoice Start Date</DescriptionTerm>
+            <DescriptionDetails>
+              {new Date(data.invoiceStartDate).toLocaleDateString()}
+            </DescriptionDetails>
+          </>
+        )}
+        {data.invoiceDueDate && (
+          <>
+            <DescriptionTerm>Invoice Due Date</DescriptionTerm>
+            <DescriptionDetails>
+              {new Date(data.invoiceDueDate).toLocaleDateString()}
+            </DescriptionDetails>
+          </>
+        )}
       </DescriptionList>
 
       {data.property?.[0]?.image && (
@@ -48,6 +106,13 @@ const LeadDetailPage = () => {
           className="rounded-md border border-gray-200"
         />
       )}
+
+      <iframe
+        title="map"
+        src={`https://maps.google.com/maps?q=${data.address.latitude},${data.address.longitude}&z=15&output=embed`}
+        className="w-full h-60 rounded-md border border-gray-200"
+        loading="lazy"
+      />
     </section>
   )
 }
