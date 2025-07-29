@@ -1,20 +1,21 @@
 'use client'
 
-// Dependencies
 import { useParams } from 'next/navigation'
 import { useQuery } from 'react-query'
 
-// Components
 import Skeleton from '@/components/catalyst/skeleton'
-import { DescriptionList, DescriptionTerm, DescriptionDetails } from '@/components/catalyst/description-list'
 import { Badge } from '@/components/catalyst/badge'
 import { Subheading } from '@/components/catalyst/heading'
+import { DescriptionList, DescriptionTerm, DescriptionDetails } from '@/components/catalyst/description-list'
 
-// Services
 import { GetLead } from '@/services/leads'
-
-// Types
 import type { Lead } from '@/services/leads/leads.props'
+
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)
+
+const formatPhone = (value: string) =>
+  value.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3')
 
 const LeadDetailPage = () => {
   const params = useParams()
@@ -26,84 +27,87 @@ const LeadDetailPage = () => {
   if (!data) return null
 
   return (
-    <section className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-medium">Lead {data.orderID}</h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400 -mt-1">Detalhes completos do lead</p>
+    <section className="space-y-10">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+        <div>
+          <h1 className="text-3xl font-semibold text-neutral-900 dark:text-white">
+            Lead {data.orderID}
+          </h1>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            Complete lead details
+          </p>
+        </div>
+        <Badge color="blue" className="capitalize text-sm px-3 py-1 rounded-md">
+          {data.status}
+        </Badge>
       </div>
 
-      <div className="space-y-6">
-        <div className="space-y-3">
-          <Subheading>General</Subheading>
-          <DescriptionList className="bg-white rounded-md border border-gray-100 p-6">
-            <DescriptionTerm>Status</DescriptionTerm>
-            <DescriptionDetails>
-              <Badge color="blue">{data.status}</Badge>
-            </DescriptionDetails>
+      {/* Client Info */}
+      <div className="space-y-4">
+        <Subheading>Client Information</Subheading>
+        <div className="bg-white shadow-md ring-1 ring-gray-100 rounded-lg p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            {data.name && (
+              <div>
+                <p className="text-sm text-gray-500">Name</p>
+                <p className="font-medium text-gray-900">{data.name}</p>
+              </div>
+            )}
+            {data.email && (
+              <div>
+                <p className="text-sm text-gray-500">Email</p>
+                <p className="font-medium text-gray-900">{data.email}</p>
+              </div>
+            )}
+            {data.phone && (
+              <div>
+                <p className="text-sm text-gray-500">Phone</p>
+                <p className="font-medium text-gray-900">
+                  {formatPhone(data.phone)}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-sm text-gray-500">Address</p>
+            <p className="font-medium text-gray-900">{data.address.formatedAddress}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Financial Info */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-4">
+          <Subheading>Financial</Subheading>
+          <DescriptionList className="bg-white rounded-md shadow-sm ring-1 ring-gray-200 p-6">
             {data.productType && (
               <>
                 <DescriptionTerm>Product</DescriptionTerm>
                 <DescriptionDetails>{data.productType}</DescriptionDetails>
               </>
             )}
-            {data.step && (
-              <>
-                <DescriptionTerm>Step</DescriptionTerm>
-                <DescriptionDetails>{data.step}</DescriptionDetails>
-              </>
-            )}
-          </DescriptionList>
-        </div>
-
-        <div className="space-y-3">
-          <Subheading>Financial</Subheading>
-          <DescriptionList className="bg-white rounded-md border border-gray-100 p-6">
             {data.initialValue !== undefined && (
               <>
                 <DescriptionTerm>Initial Value</DescriptionTerm>
-                <DescriptionDetails>{data.initialValue.toFixed(2)}</DescriptionDetails>
+                <DescriptionDetails>{formatCurrency(data.initialValue)}</DescriptionDetails>
               </>
             )}
             <DescriptionTerm>Total</DescriptionTerm>
-            <DescriptionDetails>${data.total.toFixed(2)}</DescriptionDetails>
+            <DescriptionDetails>{formatCurrency(data.total)}</DescriptionDetails>
             {data.discount !== undefined && (
               <>
                 <DescriptionTerm>Discount</DescriptionTerm>
-                <DescriptionDetails>{data.discount.toFixed(2)}</DescriptionDetails>
+                <DescriptionDetails>{formatCurrency(data.discount)}</DescriptionDetails>
               </>
             )}
           </DescriptionList>
         </div>
 
-        {(data.name || data.email || data.phone) && (
-          <div className="space-y-3">
-            <Subheading>Contact</Subheading>
-            <DescriptionList className="bg-white rounded-md border border-gray-100 p-6">
-              {data.name && (
-                <>
-                  <DescriptionTerm>Name</DescriptionTerm>
-                  <DescriptionDetails>{data.name}</DescriptionDetails>
-                </>
-              )}
-              {data.email && (
-                <>
-                  <DescriptionTerm>Email</DescriptionTerm>
-                  <DescriptionDetails>{data.email}</DescriptionDetails>
-                </>
-              )}
-              {data.phone && (
-                <>
-                  <DescriptionTerm>Phone</DescriptionTerm>
-                  <DescriptionDetails>{data.phone}</DescriptionDetails>
-                </>
-              )}
-            </DescriptionList>
-          </div>
-        )}
-
-        <div className="space-y-3">
+        <div className="space-y-4">
           <Subheading>Billing</Subheading>
-          <DescriptionList className="bg-white rounded-md border border-gray-100 p-6">
+          <DescriptionList className="bg-white rounded-md shadow-sm ring-1 ring-gray-200 p-6">
             {data.invoiceStatus && (
               <>
                 <DescriptionTerm>Invoice Status</DescriptionTerm>
@@ -112,52 +116,52 @@ const LeadDetailPage = () => {
             )}
             {data.statusPayment && (
               <>
-                <DescriptionTerm>Status Payment</DescriptionTerm>
+                <DescriptionTerm>Payment Status</DescriptionTerm>
                 <DescriptionDetails>{data.statusPayment}</DescriptionDetails>
               </>
             )}
             {data.invoiceStartDate && (
               <>
-                <DescriptionTerm>Invoice Start Date</DescriptionTerm>
+                <DescriptionTerm>Start Date</DescriptionTerm>
                 <DescriptionDetails>
-                  {new Date(data.invoiceStartDate).toLocaleDateString()}
+                  {new Date(data.invoiceStartDate).toLocaleDateString('en-US')}
                 </DescriptionDetails>
               </>
             )}
             {data.invoiceDueDate && (
               <>
-                <DescriptionTerm>Invoice Due Date</DescriptionTerm>
+                <DescriptionTerm>Due Date</DescriptionTerm>
                 <DescriptionDetails>
-                  {new Date(data.invoiceDueDate).toLocaleDateString()}
+                  {new Date(data.invoiceDueDate).toLocaleDateString('en-US')}
                 </DescriptionDetails>
               </>
             )}
           </DescriptionList>
         </div>
-
-        <div className="space-y-3">
-          <Subheading>Address</Subheading>
-          <DescriptionList className="bg-white rounded-md border border-gray-100 p-6">
-            <DescriptionTerm>Formatted</DescriptionTerm>
-            <DescriptionDetails>{data.address.formatedAddress}</DescriptionDetails>
-          </DescriptionList>
-        </div>
       </div>
 
+      {/* Property Image */}
       {data.property?.[0]?.image && (
-        <img
-          src={data.property[0].image}
-          alt="Property"
-          className="rounded-md border border-gray-200"
-        />
+        <div className="space-y-2">
+          <Subheading>Property Image</Subheading>
+          <img
+            src={data.property[0].image}
+            alt="Property"
+            className="w-full max-h-96 object-cover rounded-md border border-gray-200"
+          />
+        </div>
       )}
 
-      <iframe
-        title="map"
-        src={`https://maps.google.com/maps?q=${data.address.latitude},${data.address.longitude}&z=15&output=embed`}
-        className="w-full h-60 rounded-md border border-gray-200"
-        loading="lazy"
-      />
+      {/* Map */}
+      <div className="space-y-2">
+        <Subheading>Map Location</Subheading>
+        <iframe
+          title="map"
+          src={`https://maps.google.com/maps?q=${data.address.latitude},${data.address.longitude}&z=15&output=embed`}
+          className="w-full h-72 rounded-md border border-gray-200"
+          loading="lazy"
+        />
+      </div>
     </section>
   )
 }
