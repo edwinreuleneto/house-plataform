@@ -37,6 +37,7 @@ export interface Lead {
   _id: string
   orderID: string
   status: string
+  initialValue?: number
   total: number
   discount?: number
   invoiceStatus?: string
@@ -48,11 +49,21 @@ export interface Lead {
   suggestionSchedule?: unknown[]
   property: LeadProperty[]
   items: LeadItem[]
+  /** Personal information */
+  name?: string
+  email?: string
+  phone?: string
   isHomeOwner?: boolean
   productType?: string
   roof?: string
   roofColor?: string
   step?: string
+  /** Billing info */
+  fileInvoice?: string
+  idPayment?: string
+  invoiceDueDate?: string
+  invoiceStartDate?: string
+  urlPayment?: string
 }
 
 export interface GetLeadsFilters {
