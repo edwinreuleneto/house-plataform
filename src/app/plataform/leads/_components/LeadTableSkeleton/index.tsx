@@ -28,7 +28,7 @@ const LeadTableSkeleton = () => {
               <td className="px-6 py-4"><Skeleton className="h-4 w-28" /></td>
               <td className="px-6 py-4"><Skeleton className="h-4 w-56" /></td>
               <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
-              <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
+              <td className="px-6 py-4"><Skeleton className="h-5 w-24" /></td>
               <td className="px-6 py-4 text-right">
                 <Skeleton className="h-5 w-5 ml-auto" />
               </td>

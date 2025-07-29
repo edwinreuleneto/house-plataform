@@ -4,6 +4,9 @@
 import Link from 'next/link'
 import { EyeIcon } from 'lucide-react'
 
+// Components
+import { Badge } from '@/components/catalyst/badge'
+
 // Types
 import type { Lead } from '@/services/leads/leads.props'
 
@@ -35,7 +38,9 @@ const LeadTable = ({ leads }: LeadTableProps) => {
               <td className="px-6 py-4">{lead.address.formatedAddress}</td>
               <td className="px-6 py-4">${lead.total.toFixed(2)}</td>
               <td className="px-6 py-4">
-                {lead.name && lead.email && lead.phone ? 'Completed' : 'Incomplete'}
+                <Badge color={lead.name && lead.email && lead.phone ? 'green' : 'red'}>
+                  {lead.name && lead.email && lead.phone ? 'Completed' : 'Incomplete'}
+                </Badge>
               </td>
               <td className="px-6 py-4 text-right">
                 <Link
