@@ -35,10 +35,12 @@ const ModalSupport = ({ isOpen, onClose }: ModalSupportProps) => {
   const [state, submitToFormspree] = useFormspree('mrbqqevd')
 
   useEffect(() => {
-    if (user?.email && user?.name) {
+    const name = user?.user?.name
+    const email = user?.user?.email
+    if (name && email) {
       reset({
-        name: user.name,
-        email: user.email,
+        name,
+        email,
         company: 'DUX',
         message: '',
       })

@@ -27,7 +27,7 @@ const DashboardPage = () => {
         <div className="grid grid-cols-[auto_auto] justify-between">
           <header className="flex flex-col gap-2 mb-12">
             <h1 className="text-2xl font-medium text-neutral-600">
-              {getGreeting()}, {user?.user.name?.split(" ")[0]} 👋
+              {getGreeting()}, {user?.user?.name?.split(" ")[0] || user?.user?.email || 'User'} 👋
             </h1>
             <p className="text-sm text-neutral-600 dark:text-neutral-400 -mt-2">
               Track the main indicators and alerts.
