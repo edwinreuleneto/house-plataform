@@ -30,7 +30,7 @@ export default function ForgotPasswordPage() {
               Voltar
             </Link>
           </div>
-          <Image src="/images/houser/houser.png" width={150} height={140} alt="Donna. Presente, precisa e inteligente." />
+          <Image src="/images/houser/houser.png" width={150} height={140} alt="Houser. Presente, precisa e inteligente." />
 
           <div className="mt-10">
             <ForgotPasswordForm />

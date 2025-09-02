@@ -12,24 +12,24 @@ const inter = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "Donna. Presente, precisa e inteligente",
-  description: "Donna é sua assistente virtual de alta performance, preparada para atuar com precisão em ambientes corporativos.",
-  keywords: ["assistente virtual", "inteligência artificial", "executiva", "donna", "automação", "secretária digital"],
-  authors: [{ name: "Equipe Donna" }],
-  creator: "Donna AI",
-  metadataBase: new URL("https://donna.ai"),
+  title: "Houser. Presente, precisa e inteligente",
+  description: "Houser é sua assistente virtual de alta performance, preparada para atuar com precisão em ambientes corporativos.",
+  keywords: ["assistente virtual", "inteligência artificial", "executiva", "houser", "automação", "secretária digital"],
+  authors: [{ name: "Equipe Houser" }],
+  creator: "Houser AI",
+  metadataBase: new URL("https://houser.ai"),
 
   openGraph: {
-    title: "Donna. Presente, precisa e inteligente",
-    description: "Descubra a Donna, a assistente inteligente para empresas de alta performance.",
-    url: "https://donna.ai",
-    siteName: "Donna AI",
+    title: "Houser. Presente, precisa e inteligente",
+    description: "Descubra a Houser, a assistente inteligente para empresas de alta performance.",
+    url: "https://houser.ai",
+    siteName: "Houser AI",
     images: [
       {
-        url: "https://donna.ai/og-image.jpg",
+        url: "https://houser.ai/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Donna, a assistente virtual corporativa",
+        alt: "Houser, a assistente virtual corporativa",
       },
     ],
     locale: "pt_BR",
@@ -38,10 +38,10 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Donna. Presente, precisa e inteligente",
-    description: "Donna é sua assistente virtual corporativa de alta performance.",
-    images: ["https://donna.ai/og-image.jpg"],
-    creator: "@donna_ai",
+    title: "Houser. Presente, precisa e inteligente",
+    description: "Houser é sua assistente virtual corporativa de alta performance.",
+    images: ["https://houser.ai/og-image.jpg"],
+    creator: "@houser_ai",
   },
 }
 
