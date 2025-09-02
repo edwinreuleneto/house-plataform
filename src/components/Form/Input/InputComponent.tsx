@@ -93,10 +93,8 @@ function InputComponent<T extends FieldValues = FieldValues>({
         render={({ field }) => (
           <>
             {inputType === "mask" && (
-              <InputMask
+              <input
                 {...field}
-                maskChar={null}
-                alwaysShowMask={false}
                 autoFocus={autoFocus}
                 type={type}
                 min={min}
@@ -113,7 +111,6 @@ function InputComponent<T extends FieldValues = FieldValues>({
                   handleOnChange?.(e.target.value)
                 }}
                 tabIndex={tabindex || 1}
-                mask={mask || "(99) 99999-9999"}
               />
             )}
             {(inputType === "default" || inputType === "datetime") && (

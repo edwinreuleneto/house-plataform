@@ -59,24 +59,28 @@ const DashboardPage = () => {
   }
 
   return (
-    <FadeIn>
-      <header className="mb-8">
-        <h1 className="text-2xl font-medium text-neutral-600">
-          {getGreeting()}, {user?.user.name?.split(" ")[0]} 👋
-        </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400 -mt-1">
-          Track the main indicators and alerts.
-        </p>
-      </header>
+    <>
+      <FadeIn>
+        <div className="grid grid-cols-[auto_auto] justify-between">
+          <header className="flex flex-col gap-2 mb-12">
+            <h1 className="text-2xl font-medium text-neutral-600">
+              {getGreeting()}, {user?.user?.name?.split(" ")[0] || user?.user?.email || 'User'} 👋
+            </h1>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 -mt-2">
+              Track the main indicators and alerts.
+            </p>
+          </header>
+        </div>
+        <div className="-mt-20">
+          <GraphUsersQuestion />
+          <Stats />
+        </div>
+        <div className="mt-20">
+          <PopularTopics />
+        </div>
+      </FadeIn>
+    </>
+  );
+};
 
-      <div className="space-y-8">
-        {overview && <OverviewCards data={overview} />}
-        {timeseries && <TimeSeriesChart data={timeseries} />}
-        {tags && <TopTags data={tags} />}
-        {authors && <TopAuthors data={authors} />}
-      </div>
-    </FadeIn>
-  )
-}
-
-export default DashboardPage
+export default DashboardPage;

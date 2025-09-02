@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Poppins } from 'next/font/google'
 
 // Styles
@@ -17,7 +17,6 @@ export const metadata: Metadata = {
   keywords: ["assistente virtual", "inteligência artificial", "executiva", "donna", "automação", "secretária digital"],
   authors: [{ name: "Equipe Donna" }],
   creator: "Donna AI",
-  themeColor: "#ffffff",
   metadataBase: new URL("https://donna.ai"),
 
   openGraph: {
@@ -44,6 +43,10 @@ export const metadata: Metadata = {
     images: ["https://donna.ai/og-image.jpg"],
     creator: "@donna_ai",
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
 }
 
 

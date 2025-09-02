@@ -26,6 +26,7 @@ import {
   User2,
   Sparkles,
   LucideAxis3D,
+  FileText,
 } from "lucide-react"
 
 // Context
@@ -40,6 +41,7 @@ const SidebarContent = () => {
     { href: "/plataform/leads", icon: LucideAxis3D, label: "Leads", exact: true },
     { href: "/plataform/sales", icon: Sparkles, label: "Sales", exact: true },
     { href: "/plataform/users", icon: User2, label: "Users Houser", exact: true },
+    { href: "/plataform/blogs", icon: FileText, label: "Blogs", exact: true },
   ]
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`)

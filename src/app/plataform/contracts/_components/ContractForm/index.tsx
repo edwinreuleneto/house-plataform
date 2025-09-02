@@ -51,7 +51,7 @@ const ContractForm = ({ contractId, defaultValues }: ContractFormProps) => {
     })
 
   const mutation = useMutation((data: ContractFormValues) => {
-    const payload = { ...data, attachmentIds }
+    const payload = { ...data, attachmentIds, website: data.website ?? '' }
     return contractId ? UpdateContract(contractId, payload) : CreateContract(payload)
   }, {
       onSuccess: () => {

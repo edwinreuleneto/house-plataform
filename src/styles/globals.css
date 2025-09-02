@@ -149,3 +149,8 @@ html,body {
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+.rte-ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}

@@ -11,7 +11,21 @@ interface PaginationProps {
 }
 
 const PaginationControls = ({ page, totalPages, onChange }: PaginationProps) => {
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const buildPages = (): (number | '…')[] => {
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1)
+    }
+    const items: (number | '…')[] = []
+    items.push(1)
+    if (page > 3) items.push('…')
+    const start = Math.max(2, page - 1)
+    const end = Math.min(totalPages - 1, page + 1)
+    for (let p = start; p <= end; p++) items.push(p)
+    if (page < totalPages - 2) items.push('…')
+    items.push(totalPages)
+    return items
+  }
+  const pages = buildPages();
   const isFirst = page === 1;
   const isLast = page === totalPages;
 
@@ -45,17 +59,26 @@ const PaginationControls = ({ page, totalPages, onChange }: PaginationProps) => 
               <span className="sr-only">Previous</span>
               <ChevronLeft className="size-5" aria-hidden="true" />
             </button>
-            {pages.map((p) => (
-              <button
-                key={p}
-                onClick={() => onChange(p)}
-                aria-current={p === page ? "page" : undefined}
-                className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${
-                  p === page ? "z-10 bg-slate-800 text-white" : "text-gray-900"
-                }`}
-              >
-                {p}
-              </button>
+            {pages.map((p, idx) => (
+              p === '…' ? (
+                <span
+                  key={`ellipsis-${idx}`}
+                  className="relative inline-flex items-center px-3 py-2 text-sm font-semibold text-gray-500 ring-1 ring-gray-300 ring-inset select-none"
+                >
+                  …
+                </span>
+              ) : (
+                <button
+                  key={p}
+                  onClick={() => onChange(p)}
+                  aria-current={p === page ? "page" : undefined}
+                  className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${
+                    p === page ? "z-10 bg-slate-800 text-white" : "text-gray-900"
+                  }`}
+                >
+                  {p}
+                </button>
+              )
             ))}
             <button
               onClick={() => !isLast && onChange(page + 1)}

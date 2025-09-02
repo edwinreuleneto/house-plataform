@@ -1,36 +1,51 @@
-"use client"
+'use client'
 
-// Dependencies
-import dynamic from "next/dynamic"
+import dynamic from 'next/dynamic'
+import type { ApexOptions } from 'apexcharts'
+import React from 'react'
 
-// DTOs
-import type { DashboardTimeSeriesResponse } from "@/services/dashboard/dashboard.dto"
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false })
+type Series = { name: string; data: number[] }[]
+type CurveSingle = 'smooth' | 'straight' | 'stepline' | 'linestep' | 'monotoneCubic'
+type StrokeCurve = CurveSingle | CurveSingle[]
 
 interface TimeSeriesChartProps {
-  data: DashboardTimeSeriesResponse
+  categories: string[]
+  series: Series
+  height?: number
+  themeMode?: 'light' | 'dark'
+  curve?: StrokeCurve
+  id?: string
 }
 
-const TimeSeriesChart = ({ data }: TimeSeriesChartProps) => {
-  const categories = data.created.map(p => p.t)
-  const series = [
-    { name: "Created", data: data.created.map(p => p.c) },
-    { name: "Published", data: data.published.map(p => p.c) },
-  ]
-
+export default function TimeSeriesChart({
+  categories,
+  series,
+  height = 300,
+  themeMode = 'light',
+  curve = 'smooth',
+  id = 'timeseries',
+}: TimeSeriesChartProps) {
   const options = {
-    chart: { toolbar: { show: false }, id: "dashboard-timeseries" },
-    stroke: { curve: "smooth" },
-    xaxis: { categories },
-    theme: { mode: 'light' },
-  }
+    chart: {
+      id,
+      toolbar: { show: false },
+    },
+    stroke: {
+      curve,
+    },
+    xaxis: {
+      categories,
+    },
+    theme: {
+      mode: themeMode,
+    },
+  } satisfies ApexOptions
 
   return (
     <div className="p-4 bg-white dark:bg-neutral-900 rounded-lg shadow-sm ring-1 ring-gray-200 dark:ring-neutral-800">
-      <Chart type="line" options={options} series={series} height={300} />
+      <Chart type="line" options={options} series={series} height={height} />
     </div>
   )
 }
-
-export default TimeSeriesChart

@@ -1,7 +1,7 @@
 export interface ContractFormValues {
   companyName: string
   description: string
-  website: string
+  website?: string
   startDate: string
   endDate: string
   attachmentIds?: string[]
