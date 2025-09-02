@@ -2,54 +2,17 @@
 
 // Dependencies
 import dayjs from "dayjs"
-import { useQuery } from "react-query"
 import { useAuth } from "@/context/auth"
 
 // Components
 import { FadeIn } from "@/components/Animated"
-import OverviewCards from "./_components/OverviewCards"
-import TimeSeriesChart from "./_components/TimeSeriesChart"
-import TopTags from "./_components/TopTags"
-import TopAuthors from "./_components/TopAuthors"
+import GraphUsersQuestion from "./_components/GraphUsersQuestion"
+import Stats from "./_components/Stats"
+import PopularTopics from "./_components/PopularTopics"
 
-// Services
-import {
-  GetDashboardOverview,
-  GetDashboardTimeseries,
-  GetDashboardTopTags,
-  GetDashboardTopAuthors,
-} from "@/services/dashboard"
-
-// DTOs
-import type {
-  DashboardOverview,
-  DashboardTimeSeriesResponse,
-  DashboardTag,
-  DashboardAuthor,
-} from "@/services/dashboard/dashboard.dto"
 
 const DashboardPage = () => {
   const { user } = useAuth()
-
-  const { data: overview } = useQuery<DashboardOverview>({
-    queryKey: ["/dashboard/overview"],
-    queryFn: GetDashboardOverview,
-  })
-
-  const { data: timeseries } = useQuery<DashboardTimeSeriesResponse>({
-    queryKey: ["/dashboard/timeseries"],
-    queryFn: () => GetDashboardTimeseries({ range: "30d", interval: "day" }),
-  })
-
-  const { data: tags } = useQuery<DashboardTag[]>({
-    queryKey: ["/dashboard/top-tags"],
-    queryFn: () => GetDashboardTopTags(20),
-  })
-
-  const { data: authors } = useQuery<DashboardAuthor[]>({
-    queryKey: ["/dashboard/top-authors"],
-    queryFn: () => GetDashboardTopAuthors(10),
-  })
 
   const getGreeting = () => {
     const hour = dayjs().hour()
