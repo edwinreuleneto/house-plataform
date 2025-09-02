@@ -1,22 +1,20 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import ForgotPasswordForm from './_components/Form'
-import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import ForgotPasswordForm from "./_components/Form";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function ForgotPasswordPage() {
-  const bannerImages = [
-    '/images/login/banner-1.jpeg'
-  ]
+  const bannerImages = ["/images/login/banner-1.jpeg"];
 
-  const [randomBanner, setRandomBanner] = useState<string | null>(null)
+  const [randomBanner, setRandomBanner] = useState<string | null>(null);
 
   useEffect(() => {
-    const index = Math.floor(Math.random() * bannerImages.length)
-    setRandomBanner(bannerImages[index])
-  }, [])
+    const index = Math.floor(Math.random() * bannerImages.length);
+    setRandomBanner(bannerImages[index]);
+  }, []);
 
   return (
     <section className="grid min-h-screen grid-cols-[1fr] lg:grid-cols-[580px_1fr] xl:[680px_1fr] p-8 relative max-w-[1980px] mx-auto">
@@ -25,12 +23,19 @@ export default function ForgotPasswordPage() {
           <div className="mb-20">
             <Link
               href="/"
-              className='flex gap-1 items-center font-semibold justify-start'
-            > <ArrowLeft className="inline-block pb-2 font-semibold -mb-2" />
+              className="flex gap-1 items-center font-semibold justify-start"
+            >
+              {" "}
+              <ArrowLeft className="inline-block pb-2 font-semibold -mb-2" />
               Voltar
             </Link>
           </div>
-          <Image src="/images/houser/houser.png" width={150} height={140} alt="Donna. Presente, precisa e inteligente." />
+          <Image
+            src="/images/houser/houser.png"
+            width={150}
+            height={140}
+            alt="Houser. Presente, precisa e inteligente."
+          />
 
           <div className="mt-10">
             <ForgotPasswordForm />
@@ -51,5 +56,5 @@ export default function ForgotPasswordPage() {
         )}
       </div>
     </section>
-  )
+  );
 }
