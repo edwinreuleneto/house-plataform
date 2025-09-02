@@ -36,7 +36,7 @@ export default function PageInsights() {
       <div className="grid grid-cols-[1fr_auto] justify-between items-center mb-6 border-b border-gray-100 pb-4">
         <div>
           <h1 className="text-2xl font-medium">Insights</h1>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">Análises geradas automaticamente pela Donna</p>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">Análises geradas automaticamente pela Houser</p>
         </div>
       </div>
 

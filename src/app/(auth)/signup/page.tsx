@@ -29,7 +29,7 @@ export default function SignUpPage() {
               Voltar
             </Link>
           </div>
-          <Image src="/images/houser/houser.png" width={140} height={140} alt="Donna. Presente, precisa e inteligente." />
+          <Image src="/images/houser/houser.png" width={140} height={140} alt="Houser. Presente, precisa e inteligente." />
           <div className="mt-10">
             <SignUpForm />
           </div>

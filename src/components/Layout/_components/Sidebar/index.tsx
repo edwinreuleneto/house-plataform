@@ -61,7 +61,7 @@ const SidebarContent = () => {
               <DropdownButton as={SidebarItem} className="w-full py-2">
                 <motion.div className="w-[100%] pt-1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
                   <SidebarLabel>
-                    <Image src="/images/houser/houser.png" width={100} height={120} alt="Donna. Presente, precisa e inteligente." />
+                    <Image src="/images/houser/houser.png" width={100} height={120} alt="Houser. Presente, precisa e inteligente." />
                   </SidebarLabel>
                 </motion.div>
               </DropdownButton>
