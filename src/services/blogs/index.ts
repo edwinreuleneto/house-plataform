@@ -55,3 +55,26 @@ const CreateBlogAI = (payload: CreateBlogAIInput): Promise<Blog> =>
   api('/blogs/ai', { method: 'POST', body: payload })
 
 export { CreateBlogAI }
+
+// Async AI generation via queue
+type CreateBlogAIAsyncInput = {
+  prompt: string
+  authorId: string
+  status?: BlogStatus
+  publishedAt?: string
+}
+type CreateBlogAIAsyncResponse = { jobId: string }
+
+const CreateBlogAIAsync = (payload: CreateBlogAIAsyncInput): Promise<CreateBlogAIAsyncResponse> =>
+  api('/blogs/ai/async', { method: 'POST', body: payload })
+
+type BlogAIJobCompleted = { status: 'completed'; result: Blog }
+type BlogAIJobFailed = { status: 'failed'; reason: string }
+type BlogAIJobPending = { status: 'waiting' | 'active' | 'delayed'; progress?: number }
+type BlogAIJobNotFound = { status: 'not_found' }
+export type BlogAIJobStatus = BlogAIJobCompleted | BlogAIJobFailed | BlogAIJobPending | BlogAIJobNotFound
+
+const GetBlogAIJob = (id: string): Promise<BlogAIJobStatus> =>
+  api(`/blogs/ai/jobs/${id}`, { method: 'GET' })
+
+export { CreateBlogAIAsync, GetBlogAIJob }

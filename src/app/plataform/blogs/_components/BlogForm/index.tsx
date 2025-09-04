@@ -15,7 +15,7 @@ import Button from "@/components/Form/Button";
 import { useNotification } from "@/context/notification";
 
 // Services
-import { CreateBlog, UpdateBlog, CreateBlogAI } from "@/services/blogs";
+import { CreateBlog, UpdateBlog, CreateBlogAI, CreateBlogAIAsync, GetBlogAIJob } from "@/services/blogs";
 
 // Schema
 import BlogSchema from "./schema";
@@ -99,6 +99,8 @@ const BlogForm = ({ blogId, defaultValues, onSuccess }: BlogFormProps) => {
   const statusWatch = watch("status");
   const publishedAtWatch = watch("publishedAt");
 
+  // AI via async queue (fallback to sync if needed)
+  const [jobId, setJobId] = useState<string | null>(null);
   const aiMutation = useMutation(
     async () => {
       if (!aiPrompt.trim()) throw new Error("Please enter a topic/subject");
@@ -116,20 +118,63 @@ const BlogForm = ({ blogId, defaultValues, onSuccess }: BlogFormProps) => {
         payload.publishedAt = iso;
       }
 
-      return CreateBlogAI(payload);
+      try {
+        const res = await CreateBlogAIAsync(payload);
+        return res;
+      } catch (e: any) {
+        // Fallback to sync if async endpoint not available
+        const blog = await CreateBlogAI(payload);
+        return { jobId: `sync-${blog.id}`, __syncResult: blog } as any;
+      }
     },
     {
-      onSuccess: (blog) => {
-        setShowCelebrate(true);
-        showNotification("Post generated with AI!", "success");
-        // Open edit modal on the blogs page instead of redirecting to edit page
-        setTimeout(() => {
-          router.push(`/plataform/blogs?edit=${blog.id}`)
-        }, 600);
+      onSuccess: (res: any) => {
+        if (res.__syncResult) {
+          // Synchronous fallback path
+          const blog = res.__syncResult;
+          setShowCelebrate(true);
+          showNotification("Post generated with AI!", "success");
+          setTimeout(() => {
+            router.push(`/plataform/blogs?edit=${blog.id}`)
+          }, 600);
+          return;
+        }
+        setJobId(res.jobId);
       },
       onError: (err: any) => {
         const msg = err?.message || "Failed to generate with AI";
         showNotification(msg, "error");
+      },
+    }
+  );
+
+  const { data: jobStatus } = require('react-query').useQuery(
+    ['blogAIJob', jobId],
+    () => GetBlogAIJob(jobId as string),
+    {
+      enabled: Boolean(jobId),
+      refetchInterval: (q: any) => {
+        const s: any = q.state.data;
+        if (!s || s.status === 'waiting' || s.status === 'active' || s.status === 'delayed') return 2000;
+        return false;
+      },
+      onSuccess: (s: any) => {
+        if (s.status === 'completed') {
+          setShowCelebrate(true);
+          showNotification("Post generated with AI!", "success");
+          setJobId(null);
+          setTimeout(() => {
+            router.push(`/plataform/blogs?edit=${s.result.id}`)
+          }, 600);
+        }
+        if (s.status === 'failed') {
+          showNotification(`Falha ao gerar post: ${s.reason ?? ''}`, 'error');
+          setJobId(null);
+        }
+        if (s.status === 'not_found') {
+          showNotification('Job não encontrado, tente novamente', 'error');
+          setJobId(null);
+        }
       },
     }
   );
@@ -172,7 +217,7 @@ const BlogForm = ({ blogId, defaultValues, onSuccess }: BlogFormProps) => {
               <Wand2 className="h-5 w-5 text-indigo-600" />
               <h3 className="text-base font-semibold text-[#18292c]">Generate post with AI</h3>
             </div>
-            <span className="text-[11px] text-gray-500">POST /blogs/ai</span>
+            <span className="text-[11px] text-gray-500">AI Queue: POST /blogs/ai/async</span>
           </div>
 
           <div className="mt-3 grid grid-cols-1 gap-3">
@@ -185,21 +230,30 @@ const BlogForm = ({ blogId, defaultValues, onSuccess }: BlogFormProps) => {
 
             <div className="flex items-center gap-2">
               <Button
-                label={aiMutation.isLoading ? "Generating..." : "Generate with AI"}
+                label={aiMutation.isLoading || jobId ? "Generating..." : "Generate with AI"}
                 size="medium"
                 variant="success"
                 onClick={() => aiMutation.mutate()}
-                loading={aiMutation.isLoading}
+                loading={aiMutation.isLoading || Boolean(jobId)}
                 icon={<Sparkles className="w-4" />}
-                disabled={!aiPrompt.trim() || aiMutation.isLoading}
+                disabled={!aiPrompt.trim() || aiMutation.isLoading || Boolean(jobId)}
                 className="w-auto"
               />
+              {jobId && (
+                <Button
+                  label={'Cancelar'}
+                  size="medium"
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setJobId(null)}
+                />
+              )}
               <p className="text-xs text-gray-500">
                 A complete post will be created with cover, title, summary and content.
               </p>
             </div>
 
-            {aiMutation.isLoading && (
+            {(aiMutation.isLoading || jobId) && (
               <div className="mt-2 space-y-3 rounded-md border border-gray-100 bg-gradient-to-br from-white to-indigo-50 p-3">
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -208,13 +262,16 @@ const BlogForm = ({ blogId, defaultValues, onSuccess }: BlogFormProps) => {
                   className="flex items-center gap-2 text-indigo-700"
                 >
                   <Sparkles className="h-4 w-4 animate-pulse" />
-                  <span className="text-sm font-medium">Generating epic content...</span>
+                  <span className="text-sm font-medium">
+                    {jobId ? 'Generating with AI (queue)...' : 'Generating epic content...'}
+                  </span>
                 </motion.div>
 
                 <motion.div className="h-2 w-full rounded-full bg-indigo-200/60 overflow-hidden">
                   <motion.div
-                    className="h-full w-1/3 bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-amber-400"
-                    animate={{ x: ["0%", "200%"] }}
+                    className="h-full bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-amber-400"
+                    style={{ width: jobId && (jobStatus as any)?.progress ? `${(jobStatus as any).progress}%` : '33%' }}
+                    animate={jobId && (jobStatus as any)?.progress ? undefined : { x: ["0%", "200%"] }}
                     transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
                   />
                 </motion.div>
