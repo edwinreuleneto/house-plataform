@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useRouter } from "next/navigation";
 
 // Components
@@ -148,13 +148,13 @@ const BlogForm = ({ blogId, defaultValues, onSuccess }: BlogFormProps) => {
     }
   );
 
-  const { data: jobStatus } = require('react-query').useQuery(
+  const { data: jobStatus } = useQuery(
     ['blogAIJob', jobId],
     () => GetBlogAIJob(jobId as string),
     {
       enabled: Boolean(jobId),
-      refetchInterval: (q: any) => {
-        const s: any = q.state.data;
+      refetchInterval: (data: any) => {
+        const s = data as any;
         if (!s || s.status === 'waiting' || s.status === 'active' || s.status === 'delayed') return 2000;
         return false;
       },
