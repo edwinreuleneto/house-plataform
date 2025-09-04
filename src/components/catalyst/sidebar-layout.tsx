@@ -78,10 +78,10 @@ export function SidebarLayout({
   };
 
   return (
-     <div className="flex min-h-svh w-full bg-gray-100 pt-4 overflow-hidden">
+     <div className="flex min-h-svh w-full bg-white pt-4 overflow-hidden">
       {/* Background Pattern */}
       {/* <div className="fixed inset-0 grid-pattern opacity-30 pointer-events-none" /> */}
-      <div className="fixed inset-y-0 left-0 w-64 max-lg:hidden">{sidebar}</div>
+      <div className="fixed inset-y-0 left-0 w-64 max-lg:hidden bg-white border-r border-gray-100">{sidebar}</div>
 
       <MobileSidebar open={showSidebar} close={() => setShowSidebar(false)}>
         {sidebar}

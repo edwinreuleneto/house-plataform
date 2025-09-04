@@ -40,6 +40,57 @@ export const timeseriesSchema = z.object({
 })
 export type DashboardTimeSeriesResponse = z.infer<typeof timeseriesSchema>
 
+// Estimates Time Series DTO
+export const estimateTimeseriesSchema = z.object({
+  range: z.object({
+    start: z.string(),
+    end: z.string(),
+    interval: z.enum(['day', 'week', 'month']),
+  }),
+  requests: z.array(timeseriesPointSchema),
+})
+export type EstimateTimeSeriesResponse = z.infer<typeof estimateTimeseriesSchema>
+
+// Reads Time Series DTO
+export const readsTimeseriesSchema = z.object({
+  range: z.object({
+    start: z.string(),
+    end: z.string(),
+    interval: z.enum(['day', 'week', 'month']),
+  }),
+  reads: z.array(timeseriesPointSchema),
+})
+export type ReadsTimeSeriesResponse = z.infer<typeof readsTimeseriesSchema>
+
+// Total Reads DTO
+export const totalReadsSchema = z.object({ total: z.number() })
+export type TotalReadsResponse = z.infer<typeof totalReadsSchema>
+
+// Access Last 30 DTO
+export const accessLast30Schema = z.object({
+  range: z.object({ start: z.string(), end: z.string() }),
+  views: z.number(),
+  reads: z.number(),
+  total: z.number(),
+})
+export type AccessLast30Response = z.infer<typeof accessLast30Schema>
+
+// Top Read DTO
+export const topReadItemSchema = z.object({
+  blogId: z.string(),
+  count: z.number(),
+  blog: z
+    .object({
+      id: z.string(),
+      title: z.string(),
+      slug: z.string().nullable().optional(),
+      readsCount: z.number(),
+    })
+    .nullable(),
+})
+export const topReadSchema = z.array(topReadItemSchema)
+export type TopReadItem = z.infer<typeof topReadItemSchema>
+
 // Top Tags DTO
 export const tagSchema = z.object({
   tag: z.string(),
@@ -52,11 +103,14 @@ export type DashboardTag = z.infer<typeof tagSchema>
 export const authorSchema = z.object({
   authorId: z.string(),
   count: z.number(),
-  author: z.object({
-    id: z.string(),
-    email: z.string(),
-    name: z.string().nullable(),
-  }),
+  // According to API docs, author can be null when not found
+  author: z
+    .object({
+      id: z.string(),
+      email: z.string(),
+      name: z.string().nullable(),
+    })
+    .nullable(),
 })
 export const authorListSchema = z.array(authorSchema)
 export type DashboardAuthor = z.infer<typeof authorSchema>

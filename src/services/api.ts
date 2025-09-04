@@ -62,13 +62,42 @@ const api = async (url: string, options: RequestOptions) => {
     next: { revalidate: 3600 },
   }
 
+  const API_URL = String(process.env.API_URL || '').replace(/\/$/, '')
+  const API_PREFIX = String(process.env.API_PREFIX || '')
+    .replace(/^\/*/, '/')
+    .replace(/\/$/, '')
+
+  const path = url.startsWith('/') ? url : `/${url}`
+  const base = `${API_URL}${API_PREFIX}`
+
+  const tryFetch = async (fullPath: string) => {
+    const fullUrl = `${base}${fullPath}`
+    const res = await fetch(fullUrl, requestOptions)
+    return { res, fullUrl }
+  }
+
   try {
-    const response = await fetch(`${process.env.API_URL}${url}`, requestOptions)
-    if (!response.ok) {
-      throw new Error(`Erro na requisição: ${response.statusText}`)
+    // 1ª tentativa: caminho informado
+    let { res, fullUrl } = await tryFetch(path)
+
+    // Fallback automático: se 404 e não tem prefixo '/api', tenta novamente com '/api'
+    if (res.status === 404 && !path.startsWith('/api/')) {
+      const fallbackPath = `/api${path}`
+      const fallback = await tryFetch(fallbackPath)
+      if (fallback.res.ok) {
+        return fallback.res.json()
+      }
+      // Se o fallback também falhar, lança erro incluindo as duas URLs testadas
+      throw new Error(
+        `Erro 404 nas URLs: ${fullUrl} e ${fallback.fullUrl}. Verifique se o prefixo global da API está correto (ex.: API_PREFIX=/api).`
+      )
     }
 
-    return response.json()
+    if (!res.ok) {
+      throw new Error(`Erro na requisição (${res.status}): ${res.statusText} — URL: ${fullUrl}`)
+    }
+
+    return res.json()
   } catch (error) {
     throw error
   }

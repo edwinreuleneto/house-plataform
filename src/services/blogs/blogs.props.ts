@@ -41,6 +41,8 @@ export interface Blog {
   updatedAt: string
   cover?: FileInfo
   author: UserInfo
+  viewsCount: number
+  readsCount: number
 }
 
 export interface GetBlogsFilters {

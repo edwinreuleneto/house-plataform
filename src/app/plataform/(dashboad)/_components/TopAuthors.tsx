@@ -14,7 +14,7 @@ const TopAuthors = ({ data }: TopAuthorsProps) => {
       <ul className="space-y-2">
         {data.map((item) => (
           <li key={item.authorId} className="flex justify-between text-sm">
-            <span>{item.author.name ?? item.author.email}</span>
+            <span>{item.author ? (item.author.name ?? item.author.email) : 'Unknown author'}</span>
             <span>{item.count}</span>
           </li>
         ))}
